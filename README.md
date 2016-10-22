@@ -12,4 +12,4 @@ $ node index.js                                     # Process slack logs to find
 ```
 
 ## Notes
-Logs before date 1476409309000 for david.yang and before date 1476408152000 for andy.wang should be removed because they are produced during testing
+All logs before 1476408117000 are discarded because they occur before the official start time and were a part of testing.
