@@ -10,3 +10,6 @@ $ npm install                                       # Install project dependenci
 $ ./scraper.sh JUDGEBOT_TOKEN                       # Download logs, use token from hackduke-secrets
 $ node index.js                                     # Process slack logs to find choices
 ```
+
+## Notes
+Logs before date 1476409309000 for david.yang and before date 1476408152000 for andy.wang should be removed because they are produced during testing

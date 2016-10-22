@@ -1,5 +1,6 @@
 var fs = require('fs')
-var sortBy = require('lodash').sortBy;
+var sortBy = require('lodash').sortBy
+var filter = require('lodash').filter
 
 function readFiles(dirname, onFileContent, onError) {
   fs.readdir(dirname, function(err, filenames) {
@@ -15,7 +16,6 @@ function readFiles(dirname, onFileContent, onError) {
   })
 }
 
-
 readFiles('logs/', function(data) {
   accumulateChoices(data)
 }, function(err) {
@@ -30,7 +30,12 @@ function accumulateChoices(data) {
 
     var obj = data[keys[k]]
 
-    var sorted = sortBy(obj, 'ts').reverse()
+    var filtered = filter(obj, function(o) { 
+      // official judging start time
+      return o['date'] > 1476408117000
+    })
+
+    var sorted = sortBy(filtered, 'ts').reverse()
 
     for(var i = 0; i < sorted.length - 3; i++) {
       if(sorted[i]['text'] === 'Successfully performed judge decision, please choose again!') {
