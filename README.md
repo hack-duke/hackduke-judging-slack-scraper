@@ -12,4 +12,4 @@ $ node index.js                                     # Process slack logs to find
 ```
 
 ## Notes
-All logs before 1476408117000 are discarded because they occur before the official start time and were a part of testing.
+All logs before 1476408117000 are discarded because they occur before the official start time.
