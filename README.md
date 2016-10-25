@@ -9,7 +9,7 @@ $ npm install slack-history-export -g               # install slack-history-expo
 $ chmod +x scraper.sh                               # changes permissions for scraper.sh
 $ npm install                                       # Install project dependencies
 $ ./scraper.sh JUDGEBOT_TOKEN                       # Download logs, use token from hackduke-secrets
-$ node index.js                                     # Process slack logs to find choices
+$ USER=*user* PASSWORD=*pass* node index.js         # Process slack logs to find choices
 ```
 
 ## Notes

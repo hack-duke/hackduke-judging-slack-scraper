@@ -1,6 +1,10 @@
+var request = require('request');
 var fs = require('fs')
 var sortBy = require('lodash').sortBy
 var filter = require('lodash').filter
+var sleep = require('sleep');
+
+readFiles('logs/')
 
 function readFiles(dirname, onFileContent, onError) {
   fs.readdir(dirname, function(err, filenames) {
@@ -12,15 +16,10 @@ function readFiles(dirname, onFileContent, onError) {
     for(var i = 0; i < filenames.length; i++) {
       data[filenames[i]] = JSON.parse(fs.readFileSync('logs/' + filenames[i], 'utf8'))
     }
-    onFileContent(data)
+    accumulateChoices(data)
   })
-}
 
-readFiles('logs/', function(data) {
-  accumulateChoices(data)
-}, function(err) {
-  throw err;
-})
+}
 
 function accumulateChoices(data) {
   var choices = []
@@ -83,6 +82,30 @@ function accumulateChoices(data) {
 
   console.log(choices)
   console.log(choices.length)
+
+  var counter = 0 
+  var judge = setInterval(function(){ 
+    if(counter >= 1) {
+      clearInterval(judge)
+    } else {
+      if(choices[counter]['choice'] == '1') {
+          winner = choices[counter]['firstResume']
+          loser = choices[counter]['secondResume']
+      }  else {
+          winner = choices[counter]['secondResume']
+          loser = choices[counter]['firstResume']
+      }
+      request({
+          url: 'http://' + process.env.USER + ':' + process.env.PASSWORD + '@hackduke-judging.herokuapp.com/perform_overwrite_decision',
+          method: 'POST',
+        json: {winner_id: winner, loser_id: loser, session_name: 'code_for_good2016applicant', judge_id: '1'}
+      }, function(error, response, body){
+        console.log(body);
+      });
+    }
+    counter++
+  }, 500);
+
 }
 
 
