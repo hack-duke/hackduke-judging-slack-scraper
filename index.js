@@ -85,7 +85,7 @@ function accumulateChoices(data) {
 
   var counter = 0 
   var judge = setInterval(function(){ 
-    if(counter >= 1) {
+    if(counter >= choices.length) {
       clearInterval(judge)
     } else {
       if(choices[counter]['choice'] == '1') {
@@ -96,9 +96,9 @@ function accumulateChoices(data) {
           loser = choices[counter]['firstResume']
       }
       request({
-          url: 'http://' + process.env.USER + ':' + process.env.PASSWORD + '@hackduke-judging.herokuapp.com/perform_overwrite_decision',
+          url: 'https://' + process.env.USER + ':' + process.env.PASSWORD + '@hackduke-judging.herokuapp.com/perform_overwrite_decision',
           method: 'POST',
-        json: {winner_id: winner, loser_id: loser, session_name: 'code_for_good2016applicant', judge_id: '1'}
+        json: {winner_id: winner, loser_id: loser, session_name: 'fallcode_for_good2016applicant', judge_id: '1'}
       }, function(error, response, body){
         console.log(body);
       });
